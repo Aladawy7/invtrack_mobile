@@ -1,5 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:invtrack/core/constant/routes.dart';
+import 'package:invtrack/core/routes/routes.dart';
+import 'package:invtrack/features/history/screen/history_screen.dart';
+import 'package:invtrack/features/location/screen/location_screen.dart';
+import 'package:invtrack/features/place/screen/place_screen.dart';
+import 'package:invtrack/features/profile/screen/profile_screen.dart';
+import 'package:invtrack/features/setting/screen/setting_screen.dart';
 import 'package:invtrack/features/splash/screens/splash_screen.dart';
 import 'package:invtrack/features/onboarding/screens/onboarding_screen_1.dart';
 import 'package:invtrack/features/onboarding/screens/onboarding_screen_2.dart';
@@ -35,6 +40,28 @@ class AppRoute {
         path: Routes.homeScreen,
         builder: (context, state) => const HomeScreen(),
       ),
+      GoRoute(
+        path: Routes.locationscreen,
+        builder: (context, state) => const LocationScreen(),
+      ),
+      GoRoute(
+        path: Routes.profileScreen,
+        builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: Routes.settingsScreen,
+        builder: (context, state) => const SettingScreen(),
+      ),
+      GoRoute(
+        path: Routes.historyscreen,
+        builder: (context, state) => const HistoryScreen(),
+      ),
+    
+      GoRoute(
+        path: Routes.placescreen,
+        builder: (context, state) => const PlaceScreen(),
+      ),
     ],
   );
 }
+

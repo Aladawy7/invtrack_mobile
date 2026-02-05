@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:invtrack/core/constant/routes.dart';
+import 'package:invtrack/core/routes/routes.dart';
 import 'package:invtrack/features/auth/widgets/signin_header.dart';
 import 'package:invtrack/features/auth/widgets/username_input_field.dart';
 import 'package:invtrack/features/auth/widgets/password_input_field.dart';
 import 'package:invtrack/features/auth/widgets/remember_me_checkbox.dart';
-import 'package:invtrack/features/auth/widgets/signin_button.dart';
+import 'package:invtrack/core/widget/signin_button.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -68,6 +68,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   onPressed: () {
                     context.go(Routes.homeScreen);
                   },
+                  text: 'تسجيل الدخول',
                 ),
                 const SizedBox(height: 24),
               ],

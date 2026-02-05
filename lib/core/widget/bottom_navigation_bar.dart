@@ -1,59 +1,138 @@
 import 'package:flutter/material.dart';
-import 'package:glaze_nav_bar/glaze_nav_bar.dart';
+import 'package:go_router/go_router.dart';
+import 'package:invtrack/core/routes/routes.dart';
 import 'package:invtrack/core/utils/colors.dart';
 
-class DemoPage {
-  final String title;
-  final IconData icon;
-  final String description;
-  final Color color;
+class CustomBottomNavigationBar extends StatefulWidget {
+  const CustomBottomNavigationBar({super.key});
 
-  DemoPage({
-    required this.title,
-    required this.icon,
-    required this.description,
-    required this.color,
-  });
+  @override
+  State<CustomBottomNavigationBar> createState() =>
+      _CustomBottomNavigationBarState();
 }
 
-class MyBottomNavigationBar extends StatelessWidget {
-  final int index;
-  final ValueChanged<int> onTap;
-  const MyBottomNavigationBar({
-    super.key,
-    required this.index,
-    required this.onTap,
-  });
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+  int index = 0;
+
+  void onTap(int newIndex) {
+    setState(() {
+      index = newIndex;
+    });
+    switch (newIndex) {
+      case 0:
+        // الرئيسية
+        GoRouter.of(context).pushReplacement(Routes.homeScreen);
+        break;
+      case 1:
+        // السجل
+        GoRouter.of(context).pushReplacement(Routes.historyscreen);
+        break;
+      case 2:
+        // الملف الشخصي
+        GoRouter.of(context).pushReplacement(Routes.profileScreen);
+        break;
+      case 3:
+        // الإعدادات
+        GoRouter.of(context).pushReplacement(Routes.settingsScreen);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GlazeNavBar(
-      index: index,
-      backgroundColor: Colors.transparent,
-      items: const [
-        GlazeNavBarItem(
-          child: Icon(Icons.home, color: AppColors.primary),
-          label: ' الرئيسية',
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.07),
+            blurRadius: 12,
+            offset: Offset(0, -2),
+          ),
+        ],
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(18),
+          topRight: Radius.circular(18),
         ),
-        GlazeNavBarItem(
-          child: Icon(Icons.gradient, color: AppColors.primary),
-          label: 'السجل',
-          badgeCount: 3,
-          badgeColor: Colors.red,
-          activeBadgeColor: Colors.orange,
-        ),
-        GlazeNavBarItem(
-          child: Icon(Icons.notifications, color: AppColors.primary),
-          label: 'الملف الشخصي',
-          showBadge: true,
-          badgeColor: Colors.red,
-        ),
-        GlazeNavBarItem(
-          child: Icon(Icons.settings, color: AppColors.primary),
-          label: 'الإعدادات',
-        ),
-      ],
-      onTap: onTap,
+      ),
+      child: BottomNavigationBar(
+        currentIndex: index,
+        onTap: onTap,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.transparent,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: Colors.grey[500],
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
+        elevation: 0,
+        showUnselectedLabels: true,
+        items: [
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: index == 0
+                    ? AppColors.primary.withOpacity(0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.home,
+                color: index == 0 ? AppColors.primary : Colors.grey[500],
+              ),
+            ),
+            label: 'الرئيسية',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: index == 1
+                    ? AppColors.primary.withOpacity(0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.history,
+                color: index == 1 ? AppColors.primary : Colors.grey[500],
+              ),
+            ),
+            label: 'السجل',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: index == 2
+                    ? AppColors.primary.withOpacity(0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.person,
+                color: index == 2 ? AppColors.primary : Colors.grey[500],
+              ),
+            ),
+            label: 'الملف الشخصي',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: index == 3
+                    ? AppColors.primary.withOpacity(0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.settings,
+                color: index == 3 ? AppColors.primary : Colors.grey[500],
+              ),
+            ),
+            label: 'الإعدادات',
+          ),
+        ],
+      ),
     );
   }
 }

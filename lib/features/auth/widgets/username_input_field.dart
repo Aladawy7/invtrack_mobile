@@ -8,7 +8,7 @@ class UsernameInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
           'اسم المستخدم',
@@ -42,7 +42,7 @@ class UsernameInputField extends StatelessWidget {
               horizontal: 12,
               vertical: 12,
             ),
-            suffixIcon: const Icon(
+            prefixIcon: const Icon(
               Icons.person_outline,
               color: Color(0xFF9CA3AF),
             ),

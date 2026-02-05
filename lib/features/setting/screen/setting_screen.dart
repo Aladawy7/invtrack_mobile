@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:invtrack/core/widget/bottom_navigation_bar.dart';
-import 'package:invtrack/features/home/screen/home_main_content.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: HomeMainContent(),
-      extendBody: true,
+      appBar: AppBar(title: Text('الإعدادات')),
+      body: Center(child: Text('هنا سيتم عرض إعدادات التطبيق')),
       bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }

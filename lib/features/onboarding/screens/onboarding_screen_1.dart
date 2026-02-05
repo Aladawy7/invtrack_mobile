@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:invtrack/core/constant/routes.dart';
+import 'package:invtrack/core/routes/routes.dart';
 import 'package:invtrack/features/onboarding/widgets/dotsIndicator.dart';
 import 'package:invtrack/features/onboarding/widgets/onboarding_skip_button.dart';
 import 'package:invtrack/features/onboarding/widgets/onboarding_icon_container.dart';

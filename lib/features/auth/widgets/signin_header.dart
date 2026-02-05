@@ -6,6 +6,7 @@ class SignInHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      
       children: [
         const SizedBox(height: 40),
         // Logo

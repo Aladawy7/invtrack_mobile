@@ -5,4 +5,10 @@ class Routes {
   static const onboardingScreen3 = '/onboarding3';
   static const signinScreen = '/signinscreen';
   static const homeScreen = '/homescreen';
+  static const locationscreen = '/locationscreen';
+  static const placescreen = '/placescreen';
+  static const profileScreen = '/profilescreen';
+  static const settingsScreen = '/settingsscreen';
+  static const historyscreen = '/historyscreen';
+
 }
