@@ -9,61 +9,112 @@ class AssetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 2,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 28,
-                backgroundColor: Colors.blue.shade50,
-                child: const Icon(Icons.devices, color: Colors.blue),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(asset.name,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 4),
-                    Text(asset.code, style: TextStyle(color: Colors.grey[700])),
-                    const SizedBox(height: 6),
-                    Text('المسؤول: ${asset.owner}',
-                        style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: _borderColorForAsset(asset),
+            width: 2,
+          ),
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  StatusBadge(status: asset.status),
+                  const SizedBox(height: 2),
+                  Text(
+                    asset.name,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    asset.code,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'المسـلّم: ${asset.owner}',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                  ),
                   const SizedBox(height: 8),
-                  if (asset.completed)
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green.shade50,
-                        shape: BoxShape.circle,
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ElevatedButton(
+                      onPressed: onTap,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: _borderColorForAsset(asset),
+                        foregroundColor: _textColorForAsset(_borderColorForAsset(asset)),
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
                       ),
-                      padding: const EdgeInsets.all(6),
-                      child: const Icon(Icons.check, color: Colors.green, size: 20),
-                    )
-                  else
-                    const SizedBox(height: 32),
+                      child: Text(_labelForAsset(asset), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                    ),
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: asset.completed
+                  ? CircleAvatar(
+                      radius: 18,
+                      backgroundColor: _borderColorForAsset(asset),
+                      child: const Icon(Icons.check, color: Colors.white, size: 18),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Color _borderColorForAsset(Asset asset) {
+    switch (asset.status) {
+      case AssetStatus.good:
+        return Colors.green;
+      case AssetStatus.broken:
+        return Colors.orange;
+      case AssetStatus.notChecked:
+        return Colors.grey;
+    }
+  }
+
+  Color _textColorForAsset(Color bg) {
+    // choose white for dark backgrounds, black for light
+    return bg.computeLuminance() < 0.5 ? Colors.white : Colors.black87;
+  }
+
+  String _labelForAsset(Asset asset) {
+    switch (asset.status) {
+      case AssetStatus.good:
+        return 'سليمة';
+      case AssetStatus.broken:
+        return 'تالف';
+      case AssetStatus.notChecked:
+        return 'لم يجرد';
+    }
   }
 }
 
@@ -81,9 +132,9 @@ class StatusBadge extends StatelessWidget {
         bg = Colors.green.shade100;
         text = 'جيد';
         break;
-      case AssetStatus.warning:
+      case AssetStatus.notChecked:
         bg = Colors.orange.shade100;
-        text = 'تنبيه';
+        text = 'لم يجرد';
         break;
       case AssetStatus.broken:
         bg = Colors.red.shade100;

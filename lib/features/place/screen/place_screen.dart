@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:invtrack/core/utils/colors.dart';
 import 'package:invtrack/features/place/models/asset_model.dart';
 import 'package:invtrack/features/place/widgets/asset_detail_sheet.dart';
 import 'package:invtrack/features/place/data/sample_assets.dart';
 import 'package:invtrack/features/place/widgets/assets_app_bar.dart';
 import 'package:invtrack/features/place/widgets/assets_body.dart';
+import 'package:invtrack/features/place/widgets/assets_progress.dart';
 
 class PlaceScreen extends StatefulWidget {
-  const PlaceScreen({super.key});
+  final String? location;
+  final String? floor;
+  final String? room;
+  final double? progress;
+  final String? progressText;
+
+  const PlaceScreen({
+    super.key,
+    this.location='قسم رياضيات',
+    this.floor='طابق 2',
+    this.room='غرفة 201',
+    this.progress=0.75,
+    this.progressText='نسبة الجرد',
+  });
 
   @override
   State<PlaceScreen> createState() => _PlaceScreenState();
@@ -31,28 +46,60 @@ class _PlaceScreenState extends State<PlaceScreen> {
       return matchesFilter && matchesSearch;
     }).toList();
 
+    final title = widget.room ?? 'غرفة غير محددة';
+    final subtitle = '${widget.location ?? '-'} - ${widget.floor ?? '-'}';
+    final progress = widget.progress ?? 0.0;
+    final progressText = widget.progressText ?? '';
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AssetsAppBar(
-          title: 'غرفة 102',
-          subtitle: 'مبنى الخدمات - الطابق الأول',
-          progress: 0.5,
-          progressText: 'الفحص: 5 من 10',
+          title: title,
+          subtitle: subtitle,
           onBack: () => Navigator.of(context).maybePop(),
         ),
-        body: AssetsBody(
-          assets: filtered,
-          filter: _filter,
-          search: _search,
-          onFilterChanged: (v) => setState(() => _filter = v),
-          onSearchChanged: (v) => setState(() => _search = v),
-          onOpenDetails: (a) => _openDetails(a),
+        body: Column(
+          children: [
+            // progress row
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              child: AssetsProgress(
+                progress: progress,
+                progressText: progressText,
+                foregroundColor: Colors.black87,
+                progressColor: Colors.green,
+              ),
+            ),
+            // filter + list
+            Expanded(
+              child: AssetsBody(
+                assets: filtered,
+                filter: _filter,
+                search: _search,
+                onFilterChanged: (v) => setState(() => _filter = v),
+                onSearchChanged: (v) => setState(() => _search = v),
+                onOpenDetails: (a) => _openDetails(a),
+              ),
+            ),
+          ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.camera_alt),
+        floatingActionButton: Container(
+          height: 65,
+          width: 65,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primary,
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(255, 9, 71, 122).withOpacity(0.6),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: const Icon(Icons.camera_alt, size: 32,color: Colors.white,),
         ),
       ),
     );

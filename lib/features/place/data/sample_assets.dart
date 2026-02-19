@@ -10,7 +10,7 @@ List<Asset> getSampleAssets() {
       specs: 'Intel i5 - 8GB RAM - 256GB SSD',
       status: i % 3 == 0
           ? AssetStatus.good
-          : (i % 3 == 1 ? AssetStatus.warning : AssetStatus.broken),
+          : (i % 3 == 1 ? AssetStatus.notChecked : AssetStatus.broken),
       completed: i % 2 == 0,
     ),
   );

@@ -45,7 +45,7 @@ class FilterBar extends StatelessWidget {
             textDirection: TextDirection.rtl,
             decoration: InputDecoration(
               hintText: 'ابحث عن عهدة',
-              prefixIcon: const Icon(Icons.search),
+              suffixIcon: const Icon(Icons.search),
               filled: true,
               fillColor: Colors.grey.shade100,
               contentPadding:

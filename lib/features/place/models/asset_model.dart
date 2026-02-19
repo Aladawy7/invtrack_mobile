@@ -1,4 +1,4 @@
-enum AssetStatus { good, warning, broken }
+enum AssetStatus { good, broken, notChecked }
 
 class Asset {
   final String name;

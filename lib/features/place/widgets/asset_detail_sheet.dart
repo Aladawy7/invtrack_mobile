@@ -12,6 +12,7 @@ class AssetDetailSheet extends StatefulWidget {
 
 class _AssetDetailSheetState extends State<AssetDetailSheet> {
   AssetStatus? _status;
+  // ignore: unused_field
   String _notes = '';
 
   @override
@@ -92,7 +93,7 @@ class _AssetDetailSheetState extends State<AssetDetailSheet> {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _statusButton(AssetStatus.warning, 'مفقودة'),
+                child: _statusButton(AssetStatus.notChecked, 'مفقودة'),
               ),
             ],
           ),
