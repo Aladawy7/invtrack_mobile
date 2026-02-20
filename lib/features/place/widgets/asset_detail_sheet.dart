@@ -3,8 +3,9 @@ import '../models/asset_model.dart';
 
 class AssetDetailSheet extends StatefulWidget {
   final Asset asset;
+  final ValueChanged<Asset>? onSave;
 
-  const AssetDetailSheet({Key? key, required this.asset}) : super(key: key);
+  const AssetDetailSheet({Key? key, required this.asset, this.onSave}) : super(key: key);
 
   @override
   State<AssetDetailSheet> createState() => _AssetDetailSheetState();
@@ -12,27 +13,39 @@ class AssetDetailSheet extends StatefulWidget {
 
 class _AssetDetailSheetState extends State<AssetDetailSheet> {
   AssetStatus? _status;
-  // ignore: unused_field
   String _notes = '';
+  late TextEditingController _notesController;
 
   @override
   void initState() {
     super.initState();
     _status = widget.asset.status;
+    _notesController = TextEditingController(text: widget.asset.notes ?? '');
+    _notes = _notesController.text;
+  }
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: SingleChildScrollView(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
           Container(
             alignment: Alignment.center,
             child: Container(
@@ -93,7 +106,7 @@ class _AssetDetailSheetState extends State<AssetDetailSheet> {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _statusButton(AssetStatus.notChecked, 'مفقودة'),
+                child: _statusButton(AssetStatus.notChecked, 'لم يجرد'),
               ),
             ],
           ),
@@ -101,6 +114,7 @@ class _AssetDetailSheetState extends State<AssetDetailSheet> {
 
           // Notes
           TextField(
+            controller: _notesController,
             maxLines: 3,
             decoration: InputDecoration(
               hintText: 'ملاحظات',
@@ -124,7 +138,11 @@ class _AssetDetailSheetState extends State<AssetDetailSheet> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Placeholder: Save action
+                    final updated = widget.asset.copyWith(
+                      status: _status,
+                      notes: _notes.isEmpty ? null : _notes,
+                    );
+                    if (widget.onSave != null) widget.onSave!(updated);
                     Navigator.of(context).pop();
                   },
                   child: const Text('حفظ'),
@@ -132,8 +150,10 @@ class _AssetDetailSheetState extends State<AssetDetailSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
-        ],
+              const SizedBox(height: 8),
+            ],
+          ),
+        ),
       ),
     );
   }

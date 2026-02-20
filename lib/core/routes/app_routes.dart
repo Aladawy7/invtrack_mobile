@@ -59,7 +59,17 @@ class AppRoute {
     
       GoRoute(
         path: Routes.placescreen,
-        builder: (context, state) => const PlaceScreen(),
+        builder: (context, state) {
+          if (state.extra is Map<String, String>) {
+            final m = state.extra as Map<String, String>;
+            return PlaceScreen(
+              location: m['location'],
+              floor: m['floor'],
+              room: m['room'],
+            );
+          }
+          return const PlaceScreen();
+        },
       ),
     ],
   );

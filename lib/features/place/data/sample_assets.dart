@@ -11,7 +11,7 @@ List<Asset> getSampleAssets() {
       status: i % 3 == 0
           ? AssetStatus.good
           : (i % 3 == 1 ? AssetStatus.notChecked : AssetStatus.broken),
-      completed: i % 2 == 0,
+      // notes can be provided here if needed
     ),
   );
 }

@@ -86,7 +86,11 @@ class _LocationScreenState extends State<LocationScreen> {
                   SizedBox(height: 40),
                   SignInButton(
                     onPressed: () {
-                      GoRouter.of(context).go(Routes.placescreen);
+                      final data = <String, String>{};
+                      if (selectedLocation != null) data['location'] = selectedLocation!;
+                      if (selectedFloor != null) data['floor'] = selectedFloor!;
+                      if (selectedRoom != null) data['room'] = selectedRoom!;
+                      GoRouter.of(context).go(Routes.placescreen, extra: data);
                     },
                     text: 'بدء عملية الجرد',
                   ),

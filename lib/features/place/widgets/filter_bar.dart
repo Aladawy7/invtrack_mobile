@@ -31,7 +31,7 @@ class FilterBar extends StatelessWidget {
               items: const [
                 DropdownMenuItem(value: 'الكل', child: Text('الكل')),
                 DropdownMenuItem(value: 'سليمة', child: Text('سليمة')),
-                DropdownMenuItem(value: 'تلف', child: Text('تالف')),
+                DropdownMenuItem(value: 'تالف', child: Text('تالف')),
               ],
               onChanged: (v) {
                 if (v != null) onFilterChanged(v);

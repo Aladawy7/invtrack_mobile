@@ -76,7 +76,7 @@ class AssetCard extends StatelessWidget {
             Positioned(
               top: 10,
               right: 10,
-              child: asset.completed
+              child: asset.isCompleted
                   ? CircleAvatar(
                       radius: 18,
                       backgroundColor: _borderColorForAsset(asset),

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:invtrack/core/routes/routes.dart';
 import 'package:invtrack/core/utils/colors.dart';
 
 class AssetsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String subtitle;
-  final VoidCallback? onBack;
+  
 
   const AssetsAppBar({
     Key? key,
     required this.title,
     required this.subtitle,
-    this.onBack,
+    
   }) : super(key: key);
 
   @override
@@ -19,7 +21,7 @@ class AssetsAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.primary,
       actions: [
         IconButton(
-          onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+          onPressed: () => context.go(Routes.locationscreen),
           icon: const Icon(Icons.arrow_forward, color: Colors.white),
         ),
       ],
